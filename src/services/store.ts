@@ -1,3 +1,7 @@
+/**
+ * Store
+ */
+
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import {
@@ -5,10 +9,17 @@ import {
   useDispatch as dispatchHook,
   useSelector as selectorHook
 } from 'react-redux';
+
 import profileSlice from '../slices/profile';
+import ingredientsSlice from '../slices/ingredients';
+import burgerSlice from '../slices/burger';
+import orderSlice from '../slices/order';
 
 export const rootReducer = combineReducers({
-  profile: profileSlice.reducer
+  profile: profileSlice.reducer,
+  ingredients: ingredientsSlice.reducer,
+  burger: burgerSlice.reducer,
+  order: orderSlice.reducer
 });
 
 const store = configureStore({

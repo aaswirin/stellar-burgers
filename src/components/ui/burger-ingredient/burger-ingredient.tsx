@@ -9,6 +9,7 @@ import {
 } from '@zlden/react-developer-burger-ui-components';
 
 import { TBurgerIngredientUIProps } from './type';
+import { formatPrice } from '../../../utils/functions';
 
 export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
   ({ ingredient, count, handleAdd, locationState }) => {
@@ -24,7 +25,9 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
           {count && <Counter count={count} />}
           <img className={styles.img} src={image} alt='картинка ингредиента.' />
           <div className={`${styles.cost} mt-2 mb-2`}>
-            <p className='text text_type_digits-default mr-2'>{price}</p>
+            <p className='text text_type_digits-default mr-2'>
+              {formatPrice(price)}
+            </p>
             <CurrencyIcon type='primary' />
           </div>
           <p className={`text text_type_main-default ${styles.text}`}>{name}</p>
