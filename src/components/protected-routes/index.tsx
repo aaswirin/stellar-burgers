@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from '../../services/store';
-import { selectIsLoading, selectUser } from '../../slices/profile';
+import { selectUser } from '../../slices/user';
 import { Preloader } from '@ui';
+import { selectIsChecked } from '../../slices/user';
 
 interface ProtectedRouteProps {
   authorized: boolean;
@@ -14,16 +15,36 @@ export const ProtectedRoute = ({
   children
 }: ProtectedRouteProps) => {
   const user = useSelector(selectUser);
-  const isLoading = useSelector(selectIsLoading);
+  const isChecked = useSelector(selectIsChecked);
+  const location = useLocation();
 
-  if (isLoading) return <Preloader />;
+  console.log(user, authorized, isChecked);
 
-  if (authorized && !user) {
-    return <Navigate to='/login' />;
+  if (!isChecked) return <Preloader />;
+
+  if (authorized) {
+    if (user) return <>{children}</>;
+    return (
+      <Navigate
+        to='/login'
+        state={{
+          from: {
+            ...location,
+            background: location.state?.background,
+            state: null
+          }
+        }}
+        replace
+      />
+    );
+  } else {
+    const backgroundLocation = location.state?.from?.background || null;
+    const from = location.state?.from || { pathname: '/' };
+
+    if (!user) return children;
+
+    return (
+      <Navigate replace to={from} state={{ background: backgroundLocation }} />
+    );
   }
-  if (!authorized && user) {
-    return <Navigate replace to='/profile' />;
-  }
-
-  return <>{children}</>;
 };

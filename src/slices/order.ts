@@ -1,4 +1,6 @@
-// src\services\orders\orders-slice.ts
+/**
+ * Slice для заказов
+ */
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
@@ -20,7 +22,7 @@ export const getFeeds = createAsyncThunk(
   }
 );
 
-export const getOrderByNumber = createAsyncThunk(
+const getOrderByNumber = createAsyncThunk(
   'feed/fetchByNumber',
   async (orderNumber: number, { rejectWithValue }) => {
     try {
@@ -44,7 +46,7 @@ export const sendBurger = createAsyncThunk(
   }
 );
 
-export const getUserOrders = createAsyncThunk(
+const getUserOrders = createAsyncThunk(
   'order/getUserOrders',
   async (_, { rejectWithValue }) => {
     try {
@@ -55,7 +57,7 @@ export const getUserOrders = createAsyncThunk(
   }
 );
 
-export interface OrderState {
+interface OrderState {
   feed: {
     success: boolean;
     orders: TOrder[];

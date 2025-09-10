@@ -20,7 +20,13 @@ const initialState: IngredientsState = {
 
 export const getApiIngredients = createAsyncThunk(
   'ingredients/getApiIngredients',
-  getIngredientsApi
+  async (_, { rejectWithValue }) => {
+    try {
+      return await getIngredientsApi();
+    } catch (err: any) {
+      return rejectWithValue(err.message || 'Ошибка загрузки ингредиентов');
+    }
+  }
 );
 
 const ingredientsSlice = createSlice({
@@ -32,17 +38,14 @@ const ingredientsSlice = createSlice({
       .addCase(getApiIngredients.pending, (state) => {
         state.loading = true;
         state.error = null;
-        console.log('pending');
       })
       .addCase(getApiIngredients.fulfilled, (state, action) => {
         state.loading = false;
         state.ingredients = action.payload;
-        console.log('fulfilled');
       })
       .addCase(getApiIngredients.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-        console.log('rejected');
       });
   },
   selectors: {

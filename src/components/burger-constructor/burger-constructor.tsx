@@ -1,10 +1,15 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
-import { useSelector } from '../../services/store';
-import { selectBurger } from '../../slices/burger';
-import { selectNewOrder, selectOrderRequest } from '../../slices/order';
-import { formatPrice } from '../../utils/functions';
+import { useDispatch, useSelector } from '../../services/store';
+import { deleteBurger, selectBurger } from '../../slices/burger';
+import {
+  selectNewOrder,
+  selectOrderRequest,
+  sendBurger
+} from '../../slices/order';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { selectUser } from '../../slices/user';
 
 export const BurgerConstructor: FC = () => {
   /** Взять переменные constructorItems, orderRequest и orderModalData из stor'а */
@@ -12,9 +17,43 @@ export const BurgerConstructor: FC = () => {
   const orderRequest = useSelector(selectOrderRequest);
   const orderModalData = useSelector(selectNewOrder).order;
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const user = useSelector(selectUser);
+
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
+
+    if (!user) {
+      return navigate('/login', {
+        replace: true,
+        state: {
+          from: {
+            ...location,
+            background: location.state?.background,
+            state: null
+          }
+        }
+      });
+    } else {
+      const from = location.state?.from || { pathname: '/' };
+      const backgroundLocation = location.state?.from?.background || null;
+
+      const itemsId = [
+        constructorItems.bun._id,
+        ...constructorItems.ingredients.map((ingredient) => ingredient._id),
+        constructorItems.bun._id
+      ];
+
+      dispatch(sendBurger(itemsId)).then(() => dispatch(deleteBurger()));
+      return navigate(from, {
+        replace: true,
+        state: { background: backgroundLocation }
+      });
+    }
   };
+
   const closeOrderModal = () => {};
 
   const price = useMemo(

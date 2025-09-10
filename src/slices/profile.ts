@@ -1,3 +1,7 @@
+/**
+ * Slice для профиля
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
 

@@ -23,6 +23,7 @@ import { TIngredient } from '@utils-types';
 import { useDispatch, useSelector } from '../../services/store';
 import { getApiIngredients, selectIngredients } from '../../slices/ingredients';
 import { useEffect } from 'react';
+import { checkUser, setIsChecked } from '../../slices/user';
 
 const App = () => {
   const location = useLocation();
@@ -38,6 +39,10 @@ const App = () => {
     }
   }, [dispatch, ingredients.length]);
 
+  useEffect(() => {
+    dispatch(checkUser()).finally(() => dispatch(setIsChecked(true)));
+  }, [dispatch]);
+
   const onCloseModal = () => {
     navigate(-1);
   };
@@ -48,8 +53,9 @@ const App = () => {
       <AppHeader />
       {/* Маршруты */}
       <Routes location={background || location}>
-        {/* Конструктор страницы */}
+        {/* Конструктор бургера */}
         <Route path='/' element={<ConstructorPage />} />
+        {/* Лента заказов */}
         <Route path='/feed' element={<Feed />} />
         <Route
           path='/register'
@@ -67,6 +73,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        {/* Всё про пользователя */}
         <Route
           path='/profile'
           element={

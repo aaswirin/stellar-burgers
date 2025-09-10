@@ -14,12 +14,14 @@ import profileSlice from '../slices/profile';
 import ingredientsSlice from '../slices/ingredients';
 import burgerSlice from '../slices/burger';
 import orderSlice from '../slices/order';
+import userSlice from '../slices/user';
 
 export const rootReducer = combineReducers({
   profile: profileSlice.reducer,
   ingredients: ingredientsSlice.reducer,
   burger: burgerSlice.reducer,
-  order: orderSlice.reducer
+  order: orderSlice.reducer,
+  user: userSlice.reducer
 });
 
 const store = configureStore({
