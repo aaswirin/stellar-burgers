@@ -1,5 +1,11 @@
 import { ProfileUI } from '@ui-pages';
-import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import React, {
+  FC,
+  SyntheticEvent,
+  ChangeEvent,
+  useEffect,
+  useState
+} from 'react';
 import { useDispatch, useSelector } from '../../services/store';
 import { selectUser, updateUser } from '../../slices/user';
 
@@ -36,14 +42,16 @@ export const Profile: FC = () => {
 
   const handleCancel = (e: SyntheticEvent) => {
     e.preventDefault();
-    setFormValue({
-      name: user.name,
-      email: user.email,
-      password: ''
-    });
+    if (user) {
+      setFormValue({
+        name: user.name,
+        email: user.email,
+        password: ''
+      });
+    }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValue((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value

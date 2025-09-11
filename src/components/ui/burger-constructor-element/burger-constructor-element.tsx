@@ -3,6 +3,7 @@ import styles from './burger-constructor-element.module.css';
 import { ConstructorElement } from '@zlden/react-developer-burger-ui-components';
 import { BurgerConstructorElementUIProps } from './type';
 import { MoveButton } from '@zlden/react-developer-burger-ui-components';
+import { formatPrice } from '../../../utils/functions';
 
 export const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> =
   memo(

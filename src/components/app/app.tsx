@@ -57,6 +57,7 @@ const App = () => {
         <Route path='/' element={<ConstructorPage />} />
         {/* Лента заказов */}
         <Route path='/feed' element={<Feed />} />
+        {/* Регистрация */}
         <Route
           path='/register'
           element={
@@ -65,6 +66,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        {/* Авторизация */}
         <Route
           path='/login'
           element={
@@ -98,6 +100,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        {/* Заказы пользователя */}
         <Route
           path='/profile/orders'
           element={
@@ -131,7 +134,6 @@ const App = () => {
               </Modal>
             }
           />
-
           <Route
             path='/ingredients/:id'
             element={
@@ -140,7 +142,6 @@ const App = () => {
               </Modal>
             }
           />
-
           <Route
             path='/profile/orders/:number'
             element={

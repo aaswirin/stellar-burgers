@@ -1,5 +1,5 @@
 /**
- * Store
+ * Хранилище
  */
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';

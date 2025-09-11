@@ -1,3 +1,7 @@
+/**
+ * Лента заказов
+ */
+
 import { FC } from 'react';
 
 import styles from './orders-list.module.css';

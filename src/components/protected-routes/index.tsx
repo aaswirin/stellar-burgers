@@ -18,8 +18,6 @@ export const ProtectedRoute = ({
   const isChecked = useSelector(selectIsChecked);
   const location = useLocation();
 
-  console.log(user, authorized, isChecked);
-
   if (!isChecked) return <Preloader />;
 
   if (authorized) {

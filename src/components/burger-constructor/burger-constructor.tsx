@@ -3,7 +3,7 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from '../../services/store';
 import { deleteBurger, selectBurger } from '../../slices/burger';
-import {
+import orderSlice, {
   selectNewOrder,
   selectOrderRequest,
   sendBurger
@@ -54,7 +54,7 @@ export const BurgerConstructor: FC = () => {
     }
   };
 
-  const closeOrderModal = () => {};
+  const closeOrderModal = () => dispatch(orderSlice.actions.setNewOrder(false));
 
   const price = useMemo(
     () =>

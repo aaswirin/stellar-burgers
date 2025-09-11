@@ -22,7 +22,7 @@ export const getFeeds = createAsyncThunk(
   }
 );
 
-const getOrderByNumber = createAsyncThunk(
+export const getOrderByNumber = createAsyncThunk(
   'feed/fetchByNumber',
   async (orderNumber: number, { rejectWithValue }) => {
     try {
@@ -46,13 +46,13 @@ export const sendBurger = createAsyncThunk(
   }
 );
 
-const getUserOrders = createAsyncThunk(
+export const getUserOrders = createAsyncThunk(
   'order/getUserOrders',
   async (_, { rejectWithValue }) => {
     try {
       return await getOrdersApi();
     } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка отправки заказа');
+      return rejectWithValue(err.message || 'Ошибка получения заказа');
     }
   }
 );
@@ -123,7 +123,7 @@ const orderSlice = createSlice({
         state.orderRequest = false;
         state.error = action.payload as string;
       })
-      /* feed */
+      /* Лента заказов */
       .addCase(getFeeds.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -135,6 +135,7 @@ const orderSlice = createSlice({
       .addCase(getFeeds.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        console.log('rejected', action.payload);
       })
       /* Заказ по номеру */
       .addCase(getOrderByNumber.pending, (state) => {
