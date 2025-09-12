@@ -8,6 +8,7 @@ import styles from './order-info.module.css';
 
 import { OrderInfoUIProps } from './type';
 import { OrderStatus } from '@components';
+import { formatPrice } from '../../../utils/functions';
 
 export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
   <div className={styles.wrap}>
@@ -32,7 +33,7 @@ export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
           <span
             className={`text text_type_digits-default pl-4 pr-4 ${styles.quantity}`}
           >
-            {item.count} x {item.price}
+            {item.count} x {formatPrice(item.price)}
           </span>
           <CurrencyIcon type={'primary'} />
         </li>
@@ -43,7 +44,7 @@ export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
         <FormattedDate date={orderInfo.date} />
       </p>
       <span className={`text text_type_digits-default pr-4 ${styles.total}`}>
-        {orderInfo.total}
+        {formatPrice(orderInfo.total)}
       </span>
       <CurrencyIcon type={'primary'} />
     </div>

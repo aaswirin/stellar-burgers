@@ -3,6 +3,7 @@ import React, { FC, memo } from 'react';
 import styles from './feed-info.module.css';
 
 import { FeedInfoUIProps, HalfColumnProps, TColumnProps } from './type';
+import { formatPrice } from '../../../utils/functions';
 
 export const FeedInfoUI: FC<FeedInfoUIProps> = memo(
   ({ feed, readyOrders, pendingOrders }) => {
@@ -35,7 +36,7 @@ const HalfColumn: FC<HalfColumnProps> = ({ orders, title, textColor }) => (
           style={{ color: textColor === 'blue' ? '#00cccc' : '#F2F2F3' }}
           key={index}
         >
-          {item}
+          {formatPrice(item)}
         </li>
       ))}
     </ul>
@@ -47,6 +48,8 @@ const Column: FC<TColumnProps> = ({ title, content }) => (
     <h3 className={`pt-15 text text_type_main-medium ${styles.title}`}>
       {title}:
     </h3>
-    <p className={`text text_type_digits-large ${styles.content}`}>{content}</p>
+    <p className={`text text_type_digits-large ${styles.content}`}>
+      {formatPrice(content)}
+    </p>
   </>
 );
