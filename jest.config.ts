@@ -4,7 +4,6 @@
  */
 
 import type { Config } from 'jest';
-import type { JestConfigWithTsJest } from 'ts-jest';
 
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
@@ -179,7 +178,8 @@ const config: Config = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.[tj]sx?$': [ // для обработки файлов js/ts с помощью `ts-jest`
+    '^.+\\.[tj]sx?$': [
+      // для обработки файлов js/ts с помощью `ts-jest`
       'ts-jest',
       {
         // настройки для ts-jest
@@ -192,7 +192,7 @@ const config: Config = {
         // настройки для ts-jest
       }
     ]
-  }
+  },
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
   //   "/node_modules/",
@@ -210,6 +210,23 @@ const config: Config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  reporters: [
+    'default',
+    [
+      'jest-html-reporters',
+      {
+        publicPath: './html-report',
+        filename: 'report.html',
+        openReport: true
+      }
+    ]
+  ],
+
+  moduleNameMapper: {
+    '^@api(.*)$': '<rootDir>/src/utils/burger-api.ts',
+    '^@utils-types(.*)$': '<rootDir>/src/utils/types$1'
+  }
 };
 
 export default config;
