@@ -6,7 +6,6 @@ import userSlice, {
   logoutUser
 } from './user';
 import { getCookie, setCookie } from '../utils/cookie';
-import burgerSlice, { addIngredient } from './burger';
 
 describe("Тест для всех Reducer'ов заказа (userSlice)", () => {
   /* Что было до тестов */
