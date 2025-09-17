@@ -131,12 +131,10 @@ const orderSlice = createSlice({
       .addCase(getFeeds.fulfilled, (state, action) => {
         state.loading = false;
         state.feed = action.payload;
-        console.log(action.payload);
       })
       .addCase(getFeeds.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-        console.log('rejected', action.payload);
       })
       /* Заказ по номеру */
       .addCase(getOrderByNumber.pending, (state) => {

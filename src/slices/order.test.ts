@@ -4,14 +4,6 @@ import orderSlice, {
   getOrderByNumber,
   sendBurger,
   getUserOrders,
-  /* Селекторы */
-  selectNewOrder,
-  selectFeed,
-  selectFeedOrders,
-  selectOrdersLoading,
-  selectOrderRequest,
-  selectOrderByNumber,
-  selectUserOrders,
   /* Исходное состояние */
   initialState
 } from './order';
@@ -27,6 +19,7 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
     ingredients: ['Не мясо', 'Не рыба']
   };
 
+  /* Исходное состояние */
   test('исходное состояние', () => {
     expect(orderSlice.reducer(undefined, { type: '' })).toEqual(initialState);
   });
@@ -49,8 +42,7 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
     );
 
     expect(state.loading).toBe(false);
-    console.log(state);
-    expect(state.feed).toEqual([order]);
+    expect(state).toEqual({ ...initialState, feed: [order] });
   });
 
   test('получение ленты заказов: проверка rejected', () => {
@@ -67,7 +59,118 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
     expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
   });
 
-  /* Заказ по номеру getOrderByNumber*/
-  /* Отправить бургер sendBurger*/
-  /* Мои заказы getUserOrders*/
+  /* Заказ по номеру */
+  test('получение заказа по номеру: проверка pending', () => {
+    const action = { type: getOrderByNumber.pending.type };
+    const state = orderSlice.reducer(initialState, action);
+
+    expect(state.loading).toBe(true);
+    expect(state.error).toBeNull();
+  });
+
+  test('получение заказа по номеру: проверка fulfilled', () => {
+    const action = {
+      type: getOrderByNumber.fulfilled.type,
+      payload: { orders: [order] }
+    };
+    const state = orderSlice.reducer(
+      { ...initialState, loading: true },
+      action
+    );
+
+    expect(state.loading).toBe(false);
+    expect(state).toEqual({ ...initialState, orderByNumber: order });
+  });
+
+  test('получение заказа по номеру: проверка rejected', () => {
+    const action = {
+      type: getOrderByNumber.rejected.type,
+      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+    };
+    const state = orderSlice.reducer(
+      { ...initialState, loading: true },
+      action
+    );
+
+    expect(state.loading).toBe(false);
+    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+  });
+
+  /* Отправить бургер */
+  test('отправка бургера: проверка pending', () => {
+    const action = { type: sendBurger.pending.type };
+    const state = orderSlice.reducer(initialState, action);
+
+    expect(state.loading).toBe(true);
+    expect(state.error).toBeNull();
+  });
+
+  test('отправка бургера: проверка fulfilled', () => {
+    const action = {
+      type: sendBurger.fulfilled.type,
+      payload: { order: order, name: order.name }
+    };
+    const state = orderSlice.reducer(
+      { ...initialState, loading: true },
+      action
+    );
+
+    expect(state.loading).toBe(false);
+    expect(state.newOrder.name).toBe(order.name);
+    expect(state).toEqual({
+      ...initialState,
+      newOrder: { order: order, name: order.name }
+    });
+  });
+
+  test('отправка бургера: проверка rejected', () => {
+    const action = {
+      type: sendBurger.rejected.type,
+      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+    };
+    const state = orderSlice.reducer(
+      { ...initialState, loading: true },
+      action
+    );
+
+    expect(state.loading).toBe(false);
+    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+  });
+
+  /* Мои заказы */
+  test('получение моих заказов: проверка pending', () => {
+    const action = { type: getUserOrders.pending.type };
+    const state = orderSlice.reducer(initialState, action);
+
+    expect(state.loading).toBe(true);
+    expect(state.error).toBeNull();
+  });
+
+  test('получение моих заказов: проверка fulfilled', () => {
+    const action = {
+      type: getUserOrders.fulfilled.type,
+      payload: [order]
+    };
+    const state = orderSlice.reducer(
+      { ...initialState, loading: true },
+      action
+    );
+
+    expect(state.loading).toBe(false);
+    expect(state).toEqual({ ...initialState, userOrders: [order] });
+  });
+
+  test('получение моих заказов: проверка rejected', () => {
+    const action = {
+      type: getUserOrders.rejected.type,
+      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+    };
+    const state = orderSlice.reducer(
+      { ...initialState, loading: true },
+      action
+    );
+
+    expect(state.loading).toBe(false);
+    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+  });
 });
