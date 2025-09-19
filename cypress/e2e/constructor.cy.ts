@@ -19,6 +19,10 @@ describe('Космическая бургерная', () => {
   const ORDER_BUTTON = '[data-cy="cy_button-order"]';
   // Номер заказа
   const ORDER_NUMBER = '[data-cy="cy_order-number"]';
+  // Ввод электронной почты
+  const INPUT_EMAIL = 'input[name=email]';
+  // Ввод пароля
+  const INPUT_PASSWORD = 'input[name=password]';
   // Модальное окно
   const MODAL = '[data-cy="cy_modal"]';
   // Кнопка закрытия модального окна
@@ -27,6 +31,13 @@ describe('Космическая бургерная', () => {
   const MODAL_LINK = '[data-cy="cy_modal-link"]';
   // Оверлей модального окна
   const MODAL_OVERLAY = '[data-cy="cy_modal-overlay"]';
+
+  /* Надписи на кнопках */
+  const CAPTION_ADD = 'Добавить';
+  const CAPTION_LOGIN = 'Войти';
+
+  /* Номер заказа для теста */
+  const TEST_NUMBER_ORDER = '13 579';
 
   /* Токены */
   const accessToken = 'fake_access-token';
@@ -37,7 +48,7 @@ describe('Космическая бургерная', () => {
     cy.intercept('GET', '**/ingredients', { fixture: 'ingredients.json' }).as(
       'getIngredients'
     );
-    cy.visit('http://localhost:4000/');
+    cy.visit('');
     cy.wait('@getIngredients');
   });
 
@@ -50,26 +61,28 @@ describe('Космическая бургерная', () => {
   /* Собственно тесты */
   it('добавить ингредиент в бургер', () => {
     cy.get(BURGER_ELEMENT).should('not.exist');
-    cy.contains(BUTTON, 'Добавить').first().click();
-    cy.contains(BURGER_ELEMENT, 'Краторная булка N-200i (верх)').should(
-      'be.visible'
-    );
+    cy.contains(BUTTON, CAPTION_ADD).first().click();
+    cy.get(BURGER_ELEMENT)
+      .contains('Краторная булка N-200i (верх)')
+      .should('be.visible');
   });
 
   it('создать заказ, войти в систему', () => {
     cy.intercept('POST', '**/orders', { fixture: 'order.json' }).as('newOrder');
-    cy.intercept('POST', '**/auth/login', { fixture: 'user.json' }).as('login');
+    cy.intercept('POST', '**/auth/login', { fixture: 'login.json' }).as(
+      'login'
+    );
     cy.get(BURGER_ELEMENT).should('not.exist');
-    cy.contains(BUTTON, 'Добавить').click();
+    cy.contains(BUTTON, CAPTION_ADD).click();
     cy.get(ORDER_BUTTON).click();
-    cy.get('input[name=email]').type(user.email);
-    cy.get('input[name=password]').type(user.password);
-    cy.contains(BUTTON, 'Войти').click();
+    cy.get(INPUT_EMAIL).type(user.email);
+    cy.get(INPUT_PASSWORD).type(user.password);
+    cy.contains(BUTTON, CAPTION_LOGIN).click();
     cy.wait('@login');
     cy.get(ORDER_BUTTON).click();
     cy.wait('@newOrder');
     cy.get(MODAL).should('be.visible');
-    cy.get(ORDER_NUMBER).should('contain', '13 579');
+    cy.get(ORDER_NUMBER).should('contain', TEST_NUMBER_ORDER);
     cy.get(MODAL_CLOSE).click();
     cy.get(BURGER_ELEMENT).should('not.exist');
   });
@@ -99,15 +112,15 @@ describe('Космическая бургерная', () => {
     cy.intercept('POST', '**/orders', { fixture: 'order.json' }).as(
       'createOrder'
     );
-    cy.visit('http://localhost:4000/');
+    cy.visit('');
     cy.wait('@getUser');
     cy.get(BURGER_ELEMENT).should('not.exist');
-    cy.contains(BUTTON, 'Добавить').first().click();
+    cy.contains(BUTTON, CAPTION_ADD).first().click();
     cy.get(BURGER_ELEMENT).should('exist');
     cy.get(ORDER_BUTTON).click();
     cy.wait('@createOrder');
     cy.get(MODAL).should('be.visible');
-    cy.get(ORDER_NUMBER).should('contain', '13 579');
+    cy.get(ORDER_NUMBER).should('contain', TEST_NUMBER_ORDER);
     cy.get(MODAL_CLOSE).click();
     cy.get(BURGER_ELEMENT).should('not.exist');
   });

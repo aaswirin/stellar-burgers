@@ -7,6 +7,7 @@ import orderSlice, {
   /* Исходное состояние */
   initialState
 } from './order';
+import { ERROR_TEXT } from './const-test';
 
 describe("Тест для всех Reducer'ов заказа (ingredientsSlice)", () => {
   const order = {
@@ -48,7 +49,7 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
   test('получение ленты заказов: проверка rejected', () => {
     const action = {
       type: getFeeds.rejected.type,
-      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+      payload: ERROR_TEXT
     };
     const state = orderSlice.reducer(
       { ...initialState, loading: true },
@@ -56,7 +57,7 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
     );
 
     expect(state.loading).toBe(false);
-    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+    expect(state.error).toBe(ERROR_TEXT);
   });
 
   /* Заказ по номеру */
@@ -85,7 +86,7 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
   test('получение заказа по номеру: проверка rejected', () => {
     const action = {
       type: getOrderByNumber.rejected.type,
-      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+      payload: ERROR_TEXT
     };
     const state = orderSlice.reducer(
       { ...initialState, loading: true },
@@ -93,7 +94,7 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
     );
 
     expect(state.loading).toBe(false);
-    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+    expect(state.error).toBe(ERROR_TEXT);
   });
 
   /* Отправить бургер */
@@ -126,7 +127,7 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
   test('отправка бургера: проверка rejected', () => {
     const action = {
       type: sendBurger.rejected.type,
-      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+      payload: ERROR_TEXT
     };
     const state = orderSlice.reducer(
       { ...initialState, loading: true },
@@ -134,7 +135,7 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
     );
 
     expect(state.loading).toBe(false);
-    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+    expect(state.error).toBe(ERROR_TEXT);
   });
 
   /* Мои заказы */
@@ -163,7 +164,7 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
   test('получение моих заказов: проверка rejected', () => {
     const action = {
       type: getUserOrders.rejected.type,
-      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+      payload: ERROR_TEXT
     };
     const state = orderSlice.reducer(
       { ...initialState, loading: true },
@@ -171,6 +172,6 @@ describe("Тест для всех Reducer'ов заказа (ingredientsSlice)"
     );
 
     expect(state.loading).toBe(false);
-    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+    expect(state.error).toBe(ERROR_TEXT);
   });
 });

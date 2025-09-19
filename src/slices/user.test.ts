@@ -6,6 +6,7 @@ import userSlice, {
   logoutUser
 } from './user';
 import { getCookie, setCookie } from '../utils/cookie';
+import { ERROR_TEXT } from './const-test';
 
 describe("Тест для всех Reducer'ов заказа (userSlice)", () => {
   /* Что было до тестов */
@@ -45,12 +46,12 @@ describe("Тест для всех Reducer'ов заказа (userSlice)", () =>
   test('регистрация пользователя: проверка rejected', () => {
     const action = {
       type: registerUser.rejected.type,
-      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+      payload: ERROR_TEXT
     };
     const state = userSlice.reducer({ ...initialState, loading: true }, action);
 
     expect(state.loading).toBe(false);
-    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+    expect(state.error).toBe(ERROR_TEXT);
   });
 
   /* Вход */
@@ -74,12 +75,12 @@ describe("Тест для всех Reducer'ов заказа (userSlice)", () =>
   test('вход пользователя: проверка rejected', () => {
     const action = {
       type: loginUser.rejected.type,
-      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+      payload: ERROR_TEXT
     };
     const state = userSlice.reducer({ ...initialState, loading: true }, action);
 
     expect(state.loading).toBe(false);
-    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+    expect(state.error).toBe(ERROR_TEXT);
   });
 
   /* Обновление */
@@ -102,12 +103,12 @@ describe("Тест для всех Reducer'ов заказа (userSlice)", () =>
   test('обновление пользователя: проверка rejected', () => {
     const action = {
       type: updateUser.rejected.type,
-      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+      payload: ERROR_TEXT
     };
     const state = userSlice.reducer({ ...initialState, loading: true }, action);
 
     expect(state.loading).toBe(false);
-    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+    expect(state.error).toBe(ERROR_TEXT);
   });
 
   /* Выход */
@@ -130,12 +131,12 @@ describe("Тест для всех Reducer'ов заказа (userSlice)", () =>
   test('выход пользователя: проверка rejected', () => {
     const action = {
       type: logoutUser.rejected.type,
-      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+      payload: ERROR_TEXT
     };
     const state = userSlice.reducer({ ...initialState, loading: true }, action);
 
     expect(state.loading).toBe(false);
-    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+    expect(state.error).toBe(ERROR_TEXT);
   });
 
   /* Прибраться */

@@ -2,6 +2,7 @@ import ingredientsSlice, {
   getApiIngredients,
   initialState
 } from './ingredients';
+import { ERROR_TEXT } from './const-test';
 
 describe("Тест для всех Reducer'ов ингредиента (ingredientsSlice)", () => {
   const ingredients = [
@@ -51,13 +52,13 @@ describe("Тест для всех Reducer'ов ингредиента (ingredie
   test('проверка rejected', () => {
     const action = {
       type: getApiIngredients.rejected.type,
-      payload: 'Шеф, всё пропало, гипс завтра снимают!'
+      payload: ERROR_TEXT
     };
     const state = ingredientsSlice.reducer(
       { ...initialState, loading: true },
       action
     );
     expect(state.loading).toBe(false);
-    expect(state.error).toBe('Шеф, всё пропало, гипс завтра снимают!');
+    expect(state.error).toBe(ERROR_TEXT);
   });
 });
