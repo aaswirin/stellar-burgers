@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "fake_access-token",
+  "refreshToken": "fake_refresh-token",
+  "user": {
+    "email": "village@grandfather.рф",
+    "name": "Ванька Жуков"
+  }
+}

@@ -10,7 +10,7 @@ type TProfileState = {
   user: TUser | null;
 };
 
-const initialState: TProfileState = {
+export const initialState: TProfileState = {
   isLoading: true,
   user: null
 };

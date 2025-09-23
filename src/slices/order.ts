@@ -75,7 +75,7 @@ interface OrderState {
   error: string | null;
 }
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
   feed: {
     success: false,
     total: 0,
@@ -135,7 +135,6 @@ const orderSlice = createSlice({
       .addCase(getFeeds.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-        console.log('rejected', action.payload);
       })
       /* Заказ по номеру */
       .addCase(getOrderByNumber.pending, (state) => {

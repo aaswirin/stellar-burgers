@@ -159,21 +159,3 @@ const App = () => {
 };
 
 export default App;
-
-/*
-Шаг 1. Роутинг
-Установите библиотеку react-router-dom и в компоненте app.tsx сделайте настройку:
-по роуту / расположите компонент ConstructorPage;
-по роуту /feed расположите компонент Feed;
-по защищённому роуту /login расположите компонент Login;
-по защищённому роуту /register расположите компонент Register;
-по защищённому роуту /forgot-password расположите компонент ForgotPassword;
-по защищённому роуту /reset-password расположите компонент ResetPassword;
-по защищённому роуту /profile расположите компонент Profile;
-по защищённому роуту /profile/orders расположите компонент ProfileOrders;
-по роуту * расположите компонент NotFound404 .
-Также нужно добавить модалки с дополнительной информацией:
-по роуту /feed/:number расположите компонент Modal с компонентом OrderInfo;
-по роуту /ingredients/:id расположите компонент Modal с компонентом IngredientDetails;
-по защищённому роуту /profile/orders/:number расположите компонент Modal с компонентом OrderInfo .
- */
